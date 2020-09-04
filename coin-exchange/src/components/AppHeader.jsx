@@ -1,6 +1,22 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const H1 = styled.h1`
+    font-size: 4rem;
+`;
+
+const Header = styled.header`
+    background-color: #282c34;
+    min-height: 20vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 36px;
+    color: white;
+`;
 
 export default class AppHeader extends Component {
     constructor(props){
@@ -11,10 +27,10 @@ export default class AppHeader extends Component {
     }
     render() {
         return (
-            <header className = 'App-header'>
+            <Header>
                 <img src = {logo} alt='React logo' className = 'App-logo'/>
-                <h1 className='App-Title'>{this.state.apName}</h1>
-            </header>
+                <H1>{this.state.apName}</H1>
+            </Header>
         )
     }
 }
