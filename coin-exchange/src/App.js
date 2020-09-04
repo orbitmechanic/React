@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg'
 import './App.css';
-import CoinList from './components/CoinList/CoinList';
-import AccountBalance from './components/AccountBalance/AccountBalance'
+import CoinList from './components/CoinList';
+import AccountBalance from './components/AccountBalance'
 
 class App extends React.Component {
   constructor(props) {
