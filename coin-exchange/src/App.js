@@ -1,13 +1,14 @@
 import React from 'react';
-import logo from './logo.svg'
 import './App.css';
+import AppHeader from './components/AppHeader';
 import CoinList from './components/CoinList';
-import AccountBalance from './components/AccountBalance'
+import AccountBalance from './components/AccountBalance';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      apName: 'Coin Exchange',
       balance: 10000,
       coinData: [
         { name: 'BitCoin',
@@ -36,10 +37,7 @@ class App extends React.Component {
   render() {
     return (
       <div className = 'App'>
-        <header className = 'App-header'>
-          <img src = {logo} alt='React logo' className = 'App-logo'/>
-          <h1 className='App-Title'>Coin Exchange</h1>
-        </header>
+        <AppHeader apName={this.state.apName}/>
         <AccountBalance amount={this.state.balance}/>
         <CoinList coinData={this.state.coinData} />
       </div>
