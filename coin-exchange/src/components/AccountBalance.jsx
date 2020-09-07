@@ -10,9 +10,11 @@ const Section = styled.section`
 
 export default class AccountBalance extends Component {
     render() {
+        const buttonText = this.props.showBalance ? 'HideBalance' : 'Show Balance';
         return (
             <Section>
                 Balance: ${this.props.amount}
+                <button>{buttonText}</button>
             </Section>
         );
     }
@@ -20,4 +22,5 @@ export default class AccountBalance extends Component {
 
 AccountBalance.propTypes = {
     amount: PropTypes.number.isRequired,
+    showBalance: PropTypes.bool.isRequired,
 }
