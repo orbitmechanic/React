@@ -42,8 +42,8 @@ class App extends React.Component {
     this.handleRefresh = this.handleRefresh.bind(this);
   }
   handleRefresh(valueChangeTicker) {
-    const coin = this.state.coinData.find(({valueChangeTicker}) => ticker === valueChangeTicker);  
-    console.log(coin);
+    const foundCoin = this.state.coinData.find(({ticker}) => ticker === valueChangeTicker);  
+    console.log(foundCoin);
   }
   render() {
     return (
