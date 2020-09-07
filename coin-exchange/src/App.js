@@ -39,13 +39,18 @@ class App extends React.Component {
         }
       ],
     };
+    this.handleRefresh = this.handleRefresh.bind(this);
+  }
+  handleRefresh(valueChangeTicker) {
+    const coin = this.state.coinData.find(({valueChangeTicker}) => ticker === valueChangeTicker);  
+    console.log(coin);
   }
   render() {
     return (
       <AppStyle>
         <AppHeader apName={this.state.apName}/>
         <AccountBalance amount={this.state.balance}/>
-        <CoinList coinData={this.state.coinData} />
+        <CoinList coinData={this.state.coinData} handleRefresh={this.handleRefresh} />
       </AppStyle>
     );
   }
