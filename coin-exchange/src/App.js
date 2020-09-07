@@ -28,9 +28,8 @@ class App extends React.Component {
           price: 299.0,
         },
         { name: 'Tether',
-          balance: 0.0,
           ticker:'USDT',
-
+          balance: 0.0,
           price: 1.0,
         },
         { name: 'Ripple',
