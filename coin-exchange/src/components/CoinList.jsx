@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Coin from './Coin';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Table = styled.table`
     margin: 50px auto 50px auto;
@@ -10,13 +11,17 @@ const Table = styled.table`
 
 export default class CoinList extends Component {
     render() {
+        let columnLabel = null;
+        if (this.props.showBalance) {
+            columnLabel = <th>Balance</th>
+        }
         return (
             <Table>
                 <thead>
                     <tr>
                     <th>Name</th>
                     <th>Ticker</th>
-                    <th>Balance</th>
+                    {columnLabel}
                     <th>Price</th>
                     <th>Actions</th>
                     </tr>
@@ -29,11 +34,16 @@ export default class CoinList extends Component {
                               name={name}
                               ticker={ticker}
                               balance={balance}
-                              price={price} />
+                              price={price} 
+                              showBalance={this.props.showBalance}/>
                     )
                     }
                 </tbody>
             </Table>
         )
     }
+}
+
+CoinList.propTypes = {
+    showBalance: PropTypes.bool.isRequired,
 }

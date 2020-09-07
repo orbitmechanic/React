@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       apName: 'Coin Exchange',
       balance: 10000,
+      displayBalance: true,
       coinData: [
         { name: 'BitCoin',
           ticker:'BTC',
@@ -66,8 +67,11 @@ class App extends React.Component {
     return (
       <AppStyle>
         <AppHeader apName={this.state.apName}/>
-        <AccountBalance amount={this.state.balance} showBalance={true}/>
-        <CoinList coinData={this.state.coinData} handleRefresh={this.handleRefresh} />
+        <AccountBalance amount={this.state.balance} 
+                        showBalance={this.state.displayBalance}/>
+        <CoinList coinData={this.state.coinData} 
+                  handleRefresh={this.handleRefresh} 
+                  showBalance={this.state.displayBalance} />
       </AppStyle>
     );
   }
