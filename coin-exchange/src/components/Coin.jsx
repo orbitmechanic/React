@@ -32,6 +32,7 @@ export default class Coin extends Component {
             <tr>
                 <TableData>{this.props.name}</TableData>
                 <TableData>{this.props.ticker}</TableData>
+                <TableData>{this.props.balance}</TableData>
                 <TableData>${this.props.price}</TableData>
                 <TableData>
                     <form action="#" method="POST">
