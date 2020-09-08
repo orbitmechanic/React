@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Coin from './Coin';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Table = styled.table`
     margin: 50px auto 50px auto;
@@ -10,30 +11,35 @@ const Table = styled.table`
 
 export default class CoinList extends Component {
     render() {
+        let columnLabel = this.props.showBalance ? <th>Balance</th> : null;
         return (
             <Table>
                 <thead>
                     <tr>
                     <th>Name</th>
                     <th>Ticker</th>
-                    <th>Balance</th>
+                    {columnLabel}
                     <th>Price</th>
                     <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                    this.props.coinData.map( ({name, ticker, balance, price}) => 
-                        <Coin key = {ticker} 
-                              handleRefresh={this.props.handleRefresh}
-                              name={name}
-                              ticker={ticker}
-                              balance={balance}
-                              price={price} />
-                    )
+                    {this.props.coinData.map( ({name, ticker, balance, price}) => 
+                            <Coin key = {ticker} 
+                                handleRefresh={this.props.handleRefresh}
+                                name={name}
+                                ticker={ticker}
+                                balance={balance}
+                                showBalance={this.props.showBalance}
+                                price={price} />
+                        )
                     }
                 </tbody>
             </Table>
         )
     }
+}
+
+CoinList.propTypes = {
+    showBalance: PropTypes.bool.isRequired,
 }
