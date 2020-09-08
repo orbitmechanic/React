@@ -39,7 +39,7 @@ export default class Coin extends Component {
                 <TableData>${this.props.price}</TableData>
                 <TableData>
                     <form action="#" method="POST">
-                        <button onClick={this.handleRefresh}>Refresh</button>
+                        <button onClick={this.handleClick}>Refresh</button>
                     </form>
                 </TableData>
             </tr>

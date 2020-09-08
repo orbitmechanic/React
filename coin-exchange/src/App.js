@@ -46,13 +46,13 @@ class App extends React.Component {
       ],
     };
     this.handleRefresh = this.handleRefresh.bind(this);
-    this.toggleBalanceVisibility = this.toggleBalanceVisibility(this);
+    this.toggleBalanceVisibility = this.toggleBalanceVisibility.bind(this);
   }
   toggleBalanceVisibility() {
     this.setState({showBalance:!this.state.showBalance});
   }
   handleRefresh(valueChangeTicker) {
-    const newCoinData = this.state.coinData.map(function ({ticker, name, price}) {
+    const newCoinData = this.state.coinData.map(function ({ticker, name, balance, price}) {
       let newPrice = price;
       if ( valueChangeTicker === ticker) {
         const randomPercentage = 0.995 + Math.random()*0.01;
@@ -61,6 +61,7 @@ class App extends React.Component {
       return {
         ticker,
         name,
+        balance,
         price: newPrice,
       }
     });  
