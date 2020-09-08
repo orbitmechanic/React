@@ -28,10 +28,9 @@ export default class Coin extends Component {
    }
 
     render() {
-        let balanceDisplay = null;
-        if (this.props.showBalance) {
-            balanceDisplay = <TableData>{this.props.balance}</TableData>;
-        }
+        let balanceDisplay = this.props.showBalance ?
+         <TableData>{this.props.balance}</TableData> : null;
+        
         return (
             <tr>
                 <TableData>{this.props.name}</TableData>
@@ -40,7 +39,7 @@ export default class Coin extends Component {
                 <TableData>${this.props.price}</TableData>
                 <TableData>
                     <form action="#" method="POST">
-                        <button onClick={this.handleClick}>Refresh</button>
+                        <button onClick={this.handleRefresh}>Refresh</button>
                     </form>
                 </TableData>
             </tr>

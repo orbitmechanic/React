@@ -16,7 +16,7 @@ class App extends React.Component {
     this.state = {
       apName: 'Coin Exchange',
       balance: 10000,
-      displayBalance: true,
+      showBalance: true,
       coinData: [
         { name: 'BitCoin',
           ticker:'BTC',
@@ -46,6 +46,10 @@ class App extends React.Component {
       ],
     };
     this.handleRefresh = this.handleRefresh.bind(this);
+    this.toggleBalanceVisibility = this.toggleBalanceVisibility(this);
+  }
+  toggleBalanceVisibility() {
+    this.setState({showBalance:!this.state.showBalance});
   }
   handleRefresh(valueChangeTicker) {
     const newCoinData = this.state.coinData.map(function ({ticker, name, price}) {
@@ -66,12 +70,16 @@ class App extends React.Component {
   render() {
     return (
       <AppStyle>
-        <AppHeader apName={this.state.apName}/>
-        <AccountBalance amount={this.state.balance} 
-                        showBalance={this.state.displayBalance}/>
-        <CoinList coinData={this.state.coinData} 
-                  handleRefresh={this.handleRefresh} 
-                  showBalance={this.state.displayBalance} />
+        <AppHeader 
+          apName={this.state.apName}/>
+        <AccountBalance 
+          amount={this.state.balance} 
+          showBalance={this.state.showBalance}
+          toggleBalanceVisibility={this.toggleBalanceVisibility}/>
+        <CoinList 
+          coinData={this.state.coinData} 
+          handleRefresh={this.handleRefresh} 
+          showBalance={this.state.showBalance} />
       </AppStyle>
     );
   }
