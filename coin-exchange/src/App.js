@@ -11,9 +11,7 @@ const AppStyle = styled.div`
 `
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
       apName: 'Coin Exchange',
       balance: 10000,
       showBalance: true,
@@ -44,26 +42,18 @@ class App extends React.Component {
           price: 298.99,
         }
       ],
-    };
-    this.handleRefresh = this.handleRefresh.bind(this);
-    this.toggleBalanceVisibility = this.toggleBalanceVisibility.bind(this);
-  }
-  toggleBalanceVisibility() {
+  };
+  toggleBalanceVisibility = () => {
     this.setState({showBalance:!this.state.showBalance});
   }
-  handleRefresh(valueChangeTicker) {
-    const newCoinData = this.state.coinData.map(function ({ticker, name, balance, price}) {
-      let newPrice = price;
-      if ( valueChangeTicker === ticker) {
-        const randomPercentage = 0.995 + Math.random()*0.01;
-        newPrice = newPrice * randomPercentage;
+  handleRefresh = (valueChangeTicker) => {
+    const newCoinData = this.state.coinData.map((values) => {
+      let newValues = {...values};
+      if ( valueChangeTicker === values.ticker) {
+        let randomPercentage = 0.995 + Math.random()*0.01;
+        newValues.price *= randomPercentage;
       }
-      return {
-        ticker,
-        name,
-        balance,
-        price: newPrice,
-      }
+      return newValues;
     });  
     
     this.setState({coinData: newCoinData});
