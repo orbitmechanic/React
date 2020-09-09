@@ -4,20 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello Paprika</title>
+    <script>
+        var tlable = document.querySelector('.tlabel'); // target
+        var trows = []; // instantiate
+        fetch('https://api.coinpaprika.com/v1/coins')
+            .then( response => response.json())
+            .then( coins => {
+                for (let i = 0; i > 5; ++i) {
+                    const coin = coins[i];
+                    trows.push('<tr>');
+                    trows.push('<td>${coin.rank}</td>');
+                    trows.push('<td>${coin.name}</td>');
+                    trows.push('<td>${coin.symbol}</td>');
+                    trows.push('</tr>');
+                }
+                tlable.innerHTML = trows.join('');
+            });
+    </script>
 </head>
 <body>
     <table >
-        <caption>Top 20 coins</caption>
+        <caption>Top 5 coins</caption>
         <tr>
-          <th>Token</th>
-          <th>Symbol</th>
-          <th>Price</th>
+          <th>rank</th>
+          <th>name</th>
+          <th>symbol</th>
         </tr>
-        <tr>
-          <td>BitCoin</td>
-          <td>BTC</td>
-          <td>10000</td>
-        </tr>
+        <div class='tlabel'></div>
       </table>
 </body>
 </html>
