@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Paprika</title>
+    <script>
+        async function goGetIt() {
+            try {
+                var trows = []; // instantiate
+                fetch('https://api.coinpaprika.com/v1/coins')
+                .then( response => response.json())
+                .then( coins => {
+                    for (let i = 0; i < 20; ++i) {
+                        const coin = coins[i];
+                        trows.push(`<tr>
+                                        <td>${coin.name}</td>
+                                        <td>${coin.symbol}</td>
+                                    </tr>`);
+                    }
+                    const tlable = document.querySelector('.nsrtHeer'); 
+                    tlable.innerHTML = 
+                        `<table>
+                            <caption>Top 20 coins</caption>
+                            <tr>
+                                <th>name</th>
+                                <th>symbol</th>
+                            </tr>
+                            ${trows.join('')}
+                        </table>`;
+                });
+            } catch (error) {
+                console.log('fetch error: ' + eror);
+            } // try-catch()
+        }
+        window.onload = goGetIt();
+    </script>
+</head>
+<body>
+    <div class='nsrtHeer'></div>
+</body>
+</html>
