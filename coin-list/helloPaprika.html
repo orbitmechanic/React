@@ -11,7 +11,7 @@
                 fetch('https://api.coinpaprika.com/v1/coins')
                 .then( response => response.json())
                 .then( coins => {
-                    for (let i = 0; i < 5; ++i) {
+                    for (let i = 0; i < 20; ++i) {
                         const coin = coins[i];
                         trows.push(`<tr>
                                         <td>${coin.name}</td>
@@ -21,7 +21,7 @@
                     const tlable = document.querySelector('.nsrtHeer'); 
                     tlable.innerHTML = 
                         `<table>
-                            <caption>Top 5 coins</caption>
+                            <caption>Top 20 coins</caption>
                             <tr>
                                 <th>name</th>
                                 <th>symbol</th>
