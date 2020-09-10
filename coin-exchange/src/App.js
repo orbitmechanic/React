@@ -43,6 +43,9 @@ class App extends React.Component {
         }
       ],
   };
+  componentDidMount = () => {
+    console.log('Mount');
+  }
   toggleBalanceVisibility = () => {
     this.setState({showBalance:!this.state.showBalance});
   }
