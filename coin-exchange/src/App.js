@@ -3,19 +3,21 @@ import AppHeader from './components/AppHeader';
 import CoinList from './components/CoinList';
 import AccountBalance from './components/AccountBalance';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const AppStyle = styled.div`
   text-align: center;
   background-color: darkslategray;
   color: #cccccc;
 `
-
+const COIN_COUNT = 10;
 class App extends React.Component {
   state = {
       apName: 'Coin Exchange',
       balance: 10000,
       showBalance: true,
       coinData: [
+        /*
         { name: 'BitCoin',
           ticker:'BTC',
           balance: 0.5,
@@ -41,11 +43,33 @@ class App extends React.Component {
           balance: 0.0,
           price: 298.99,
         }
-      ],
+      */]
   };
+  componentDidMount = () => {
+    console.log('Begin componentDidMount.');
+    axios.get('https://api.coinpaprika.com/v1/coins')
+      .then( response => {
+        let coinData = response.data.slice(0,COIN_COUNT).map( function (coin) {
+          return {
+            key:     coin.id,
+            name:    coin.name,
+            ticker:  coin.symbol,
+            balance: 0,
+            price:   0,
+          };
+        });
+        console.log('Begin setState...')
+        this.setState({ coinData});
+        console.log('...End setState');
+      });   
+    console.log('...End componentDidMount.')
+    debugger;
+  }
+
   toggleBalanceVisibility = () => {
     this.setState({showBalance:!this.state.showBalance});
   }
+
   handleRefresh = (valueChangeTicker) => {
     const newCoinData = this.state.coinData.map((values) => {
       let newValues = {...values};
@@ -55,9 +79,9 @@ class App extends React.Component {
       }
       return newValues;
     });  
-    
     this.setState({coinData: newCoinData});
   }
+
   render() {
     return (
       <AppStyle>
