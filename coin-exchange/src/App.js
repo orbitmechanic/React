@@ -45,26 +45,20 @@ class App extends React.Component {
         }
       */]
   };
-  componentDidMount = () => {
-    console.log('Begin componentDidMount.');
-    axios.get('https://api.coinpaprika.com/v1/coins')
-      .then( response => {
-        let coinData = response.data.slice(0,COIN_COUNT).map( function (coin) {
-          return {
-            key:     coin.id,
-            name:    coin.name,
-            ticker:  coin.symbol,
-            balance: 0,
-            price:   0,
-          };
-        });
-        console.log('Begin setState...')
-        this.setState({ coinData});
-        console.log('...End setState');
-      });   
-    console.log('...End componentDidMount.')
-    debugger;
-  }
+  componentDidMount = async () => {
+    let repsonse = await axios.get('https://api.coinpaprika.com/v1/coins')
+    let coinData = repsonse.data.slice(0,COIN_COUNT).map( function (coin) {
+      return {
+        key:     coin.id,
+        name:    coin.name,
+        ticker:  coin.symbol,
+        balance: 0,
+        price:   0,
+      };
+    });
+    // Retrieve the prices
+    this.setState({ coinData});
+  };   
 
   toggleBalanceVisibility = () => {
     this.setState({showBalance:!this.state.showBalance});
