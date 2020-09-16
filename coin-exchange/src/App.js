@@ -31,17 +31,17 @@ class App extends React.Component {
 
     // Retrieve the prices
     const coinPriceData = coinData.map(function(response) {
-      coin = response.data;
+      const coin = response.data;
       return {
         key:    coin.id,
         name:   coin.name,
         ticker: coin.symbol, 
         balance: 0,
-        price:  coin.quotes.USD.price,
+        price:  parseFloat(Number(coin.quotes.USD.price).toFixed(2)),
       };
     })
 
-    this.setState({ coinData});
+    this.setState({ coinData: coinPriceData});
   };   
 
   toggleBalanceVisibility = () => {
