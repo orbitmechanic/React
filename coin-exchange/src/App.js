@@ -48,17 +48,9 @@ class App extends React.Component {
 
   loadAllAPIData = async () => {
     // Load API data for all items.
-
-    // Fetch the IDs of first COIN_COUNT items.
     const coinIds = await this.getIDs();
-
-    // Retrieve coin data array
     const coinData = await this.getCoinData(coinIds);
-
-    // Retrieve the prices
     const coinPriceData = this.extractPrices(coinData);
-
-    // Push formatted prices to ap state.
     this.setState({ coinData: coinPriceData});
   }
 
