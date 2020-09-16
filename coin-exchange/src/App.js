@@ -16,47 +16,31 @@ class App extends React.Component {
       apName: 'Coin Exchange',
       balance: 10000,
       showBalance: true,
-      coinData: [
-        /*
-        { name: 'BitCoin',
-          ticker:'BTC',
-          balance: 0.5,
-          price: 9999.99,
-        },
-        { name: 'Ethereum',
-          ticker: 'ETH',
-          balance: 32.0,
-          price: 299.0,
-        },
-        { name: 'Tether',
-          ticker:'USDT',
-          balance: 0.0,
-          price: 1.0,
-        },
-        { name: 'Ripple',
-          ticker: 'XRP',
-          balance: 1000,
-          price: 0.2,
-        },
-        { name: 'BitCoin Cash',
-          ticker: 'BCH',
-          balance: 0.0,
-          price: 298.99,
-        }
-      */]
+      coinData: [],
   };
+
   componentDidMount = async () => {
-    let repsonse = await axios.get('https://api.coinpaprika.com/v1/coins')
-    let coinData = repsonse.data.slice(0,COIN_COUNT).map( function (coin) {
-      return {
-        key:     coin.id,
-        name:    coin.name,
-        ticker:  coin.symbol,
-        balance: 0,
-        price:   0,
-      };
-    });
+    // Retrieve id's
+    const repsonse = await axios.get('https://api.coinpaprika.com/v1/coins')
+    const coinIds = repsonse.data.slice(0,COIN_COUNT).map(coin => coin.id);
+
+    // Retrieve coin data array
+    const tickerUrl = 'https://api.coinpaprika.com/v1/tickers/';
+    const promises = coinIds.map(key => axios.get(tickerUrl + key));
+    const coinData = await Promise.all(promises);
+
     // Retrieve the prices
+    const coinPriceData = coinData.map(function(response) {
+      coin = response.data;
+      return {
+        key:    coin.id,
+        name:   coin.name,
+        ticker: coin.symbol, 
+        balance: 0,
+        price:  coin.quotes.USD.price,
+      };
+    })
+
     this.setState({ coinData});
   };   
 
