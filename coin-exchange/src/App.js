@@ -19,18 +19,22 @@ class App extends React.Component {
       coinData: [],
   };
 
-  componentDidMount = async () => {
-    // Retrieve id's
+  getIDs = async () => {
+    // Fetch the IDs of first COIN_COUNT items.
     const repsonse = await axios.get('https://api.coinpaprika.com/v1/coins')
-    const coinIds = repsonse.data.slice(0,COIN_COUNT).map(coin => coin.id);
+    return repsonse.data.slice(0,COIN_COUNT).map(coin => coin.id);
+  }
 
-    // Retrieve coin data array
+  getCoinData = async(coinIds) => {
+    // Retrieve coin data array for given coin id's.
     const tickerUrl = 'https://api.coinpaprika.com/v1/tickers/';
     const promises = coinIds.map(key => axios.get(tickerUrl + key));
-    const coinData = await Promise.all(promises);
+    return await Promise.all(promises);
+  }
 
-    // Retrieve the prices
-    const coinPriceData = coinData.map(function(response) {
+  extractPrices = (coinData) => {
+    // Extract prices from given coinData array
+    return coinData.map(function(response) {
       const coin = response.data;
       return {
         key:    coin.id,
@@ -39,9 +43,28 @@ class App extends React.Component {
         balance: 0,
         price:  parseFloat(Number(coin.quotes.USD.price).toFixed(2)),
       };
-    })
+    });
+  }
 
+  loadAllAPIData = async () => {
+    // Load API data for all items.
+
+    // Fetch the IDs of first COIN_COUNT items.
+    const coinIds = await this.getIDs();
+
+    // Retrieve coin data array
+    const coinData = await this.getCoinData(coinIds);
+
+    // Retrieve the prices
+    const coinPriceData = this.extractPrices(coinData);
+
+    // Push formatted prices to ap state.
     this.setState({ coinData: coinPriceData});
+  }
+
+  componentDidMount = async () => {
+    // hook for timing.  Do this:
+    this.loadAllAPIData();
   };   
 
   toggleBalanceVisibility = () => {
