@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -7,31 +7,30 @@ const TableData = styled.td`
     width:25vh;
 `;
 
-export default class Coin extends Component {
-   handleClick = (event) => {
-       // prevent the default action of submitting the form
-       event.preventDefault();
-       this.props.handleRefresh(this.props.tickerId);
-   }
+export default function Coin(props) {
 
-    render() {
-        let balanceDisplay = this.props.showBalance ?
-         <TableData>{this.props.balance}</TableData> : null;
-        
-        return (
-            <tr>
-                <TableData>{this.props.name}</TableData>
-                <TableData>{this.props.ticker}</TableData>
-                {balanceDisplay}
-                <TableData>${this.props.price}</TableData>
-                <TableData>
-                    <form action="#" method="POST">
-                        <button onClick={this.handleClick}>Refresh</button>
-                    </form>
-                </TableData>
-            </tr>
-        );
+    const handleClick = (event) => {
+        // prevent the default action of submitting the form
+        event.preventDefault();
+        props.handleRefresh(props.tickerId);
     }
+
+    let balanceDisplay = props.showBalance ?
+        <TableData>{props.balance}</TableData> : null;
+
+    return (
+        <tr>
+            <TableData>{props.name}</TableData>
+            <TableData>{props.ticker}</TableData>
+            {balanceDisplay}
+            <TableData>${props.price}</TableData>
+            <TableData>
+                <form action="#" method="POST">
+                    <button onClick={handleClick}>Refresh</button>
+                </form>
+            </TableData>
+        </tr>
+    );
 }
 
 Coin.propTypes = {
