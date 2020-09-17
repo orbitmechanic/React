@@ -5,6 +5,10 @@ import AccountBalance from './components/AccountBalance';
 import styled from 'styled-components';
 import axios from 'axios';
 
+//import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootswatch/dist/superhero/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/js/all';
+
 const AppStyle = styled.div`
   text-align: center;
   background-color: darkslategray;
@@ -16,7 +20,7 @@ const formatPrice = price => parseFloat(Number(price).toFixed(2));
 function App (props) {
 
   // const [balance, setBalance] = useState(10000);
-  const balance = 10000;
+  const [balance, setBalance] = useState(10000);
   const [showBalance, setShowBalance] = useState(true);
   const [coinData, setCoinData] = useState([]);
   const apName = 'Coin Exchange';
@@ -65,6 +69,23 @@ function App (props) {
     }
   });
 
+  const handleBrrrr = () => {
+    setBalance( oldBalance => oldBalance + 1200);
+  }
+
+  const handleTransaction = ( isBuy, valueChangeID) => {
+    var balanceChange = isBuy ? 1: -1;
+    const newCoinData = coinData.map( function(values) {
+      let newValues = {...values};
+      if ( valueChangeID === values.key) {
+        newValues.balance += balanceChange;
+        setBalance( oldBalance => oldBalance - balanceChange*newValues.price);
+      }
+      return newValues;
+    });
+    setCoinData(newCoinData);
+  }
+
   const toggleBalanceVisibility = () => {
     setShowBalance(oldValue => !oldValue);
   }
@@ -90,10 +111,12 @@ function App (props) {
       <AccountBalance 
         amount={balance} 
         showBalance={showBalance}
+        handleBrrrr={handleBrrrr}
         toggleBalanceVisibility={toggleBalanceVisibility}/>
       <CoinList 
         coinData={coinData} 
         handleRefresh={handleRefresh} 
+        handleTransaction={handleTransaction}
         showBalance={showBalance} />
     </AppStyle>
   );

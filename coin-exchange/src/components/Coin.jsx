@@ -4,31 +4,65 @@ import styled from 'styled-components';
 
 const TableData = styled.td`
     border: 1px solid #cccccc;
-    width:25vh;
+    width: 16vw;
+`;
+
+const TableDataName = styled(TableData)`
+    width: 20vw;
+`;
+
+const TableDataControls = styled(TableData)`
+    width: 16vw;
+`;
+
+const Button = styled.button`
+    font-size: 11px;
+    width: 64px;
+    margin: 3px 5px 0;
 `;
 
 export default function Coin(props) {
 
-    const handleClick = (event) => {
-        // prevent the default action of submitting the form
+    const handleRefresh = (event) => {
+        // Refresh the screen
         event.preventDefault();
         props.handleRefresh(props.tickerId);
     }
 
+    const handleBuy = (event) => {
+        // Purchase tokens
+        event.preventDefault();
+        props.handleTransaction(true, props.tickerId);
+    }
+
+    const handleSell = (event) => {
+        // Sell tokens
+        event.preventDefault();
+        props.handleTransaction(false, props.tickerId);
+    }
+
     let balanceDisplay = props.showBalance ?
-        <TableData>{props.balance}</TableData> : null;
+        <TableData>{props.balance}</TableData> : '-';
 
     return (
         <tr>
-            <TableData>{props.name}</TableData>
+            <TableDataName>{props.name}</TableDataName>
             <TableData>{props.ticker}</TableData>
             {balanceDisplay}
             <TableData>${props.price}</TableData>
-            <TableData>
+            <TableDataControls>
                 <form action="#" method="POST">
-                    <button onClick={handleClick}>Refresh</button>
+                    <Button className='btn btn-info' 
+                        onClick={handleRefresh}>Refresh
+                    </Button>
+                    <Button className='btn btn-warning' 
+                        onClick={handleBuy}>Buy
+                    </Button>
+                    <Button className='btn btn-danger' 
+                        onClick={handleSell}>Sell
+                    </Button>
                 </form>
-            </TableData>
+            </TableDataControls>
         </tr>
     );
 }
