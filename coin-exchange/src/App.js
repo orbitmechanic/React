@@ -11,6 +11,8 @@ const AppStyle = styled.div`
   color: #cccccc;
 `
 const COIN_COUNT = 10;
+const formatPrice = price => parseFloat(Number(price).toFixed(2));
+
 class App extends React.Component {
   state = {
       apName: 'Coin Exchange',
@@ -41,7 +43,7 @@ class App extends React.Component {
         name:   coin.name,
         ticker: coin.symbol, 
         balance: 0,
-        price:  parseFloat(Number(coin.quotes.USD.price).toFixed(2)),
+        price:  formatPrice(coin.quotes.USD.price),
       };
     });
   }
@@ -63,12 +65,14 @@ class App extends React.Component {
     this.setState({showBalance:!this.state.showBalance});
   }
 
-  handleRefresh = (valueChangeTicker) => {
+  handleRefresh = async (valueChangeId) => {
+    const tickerUrl = `https://api.coinpaprika.com/v1/tickers/${valueChangeId}`;
+    const response = await axios.get(tickerUrl);
+    const newPrice = formatPrice(response.data.quotes.USD.price);
     const newCoinData = this.state.coinData.map((values) => {
       let newValues = {...values};
-      if ( valueChangeTicker === values.ticker) {
-        let randomPercentage = 0.995 + Math.random()*0.01;
-        newValues.price *= randomPercentage;
+      if ( valueChangeId === values.key) {
+        newValues.price = newPrice;
       }
       return newValues;
     });  
