@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import AppHeader from './components/AppHeader';
 import CoinList from './components/CoinList';
 import AccountBalance from './components/AccountBalance';
@@ -15,10 +15,11 @@ const formatPrice = price => parseFloat(Number(price).toFixed(2));
 
 function App (props) {
 
-  const [balance, setBalance] = useState(10000);
+  // const [balance, setBalance] = useState(10000);
+  const balance = 10000;
   const [showBalance, setShowBalance] = useState(true);
   const [coinData, setCoinData] = useState([]);
-  const [apName, setApName] = useState('Coin Exchange');
+  const apName = 'Coin Exchange';
 
   const getIDs = async () => {
     // Fetch the IDs of first COIN_COUNT items.
@@ -55,10 +56,14 @@ function App (props) {
     setCoinData(coinPriceData);
   }
 
-  const componentDidMount = async () => {
-    // hook for timing.  Do this:
-    loadAllAPIData();
-  };   
+  useEffect (function() {
+    if (coinData.length === 0){
+      // component did mount
+      loadAllAPIData();
+    } else {
+      // component did update
+    }
+  });
 
   const toggleBalanceVisibility = () => {
     setShowBalance(oldValue => !oldValue);
