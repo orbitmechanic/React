@@ -78,6 +78,19 @@ function App (props) {
     const newCoinData = coinData.map( function(values) {
       let newValues = {...values};
       if ( valueChangeID === values.key) {
+        if ( isBuy ) {
+          if ( balance < newValues.price ) {
+            // insufficient funds
+            alert('Insufficient funds for this purchase.');
+            return values;
+          } 
+        } else {
+          if (values.balance + balanceChange < 0) {
+            // insufficient holdings
+            alert('Insufficient holdings for this sell order.');
+            return values;
+          }
+        } // Transaction is possible.
         newValues.balance += balanceChange;
         setBalance( oldBalance => oldBalance - balanceChange*newValues.price);
       }
