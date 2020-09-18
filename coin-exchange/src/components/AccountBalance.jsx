@@ -37,7 +37,7 @@ export default function AccountBalance (props) {
 
     return (
         <>
-            <Balance>{content}</Balance>
+            <Balance>Fiat: {content}</Balance>
             <Section>
                 <BalanceToggleButton 
                     className={buttonClass} 

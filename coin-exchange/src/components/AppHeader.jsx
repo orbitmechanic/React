@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './animateLogo.css';
 import logo from './logo.svg'
 import PropTypes from 'prop-types';
@@ -24,21 +24,14 @@ const Img = styled.img`
     pointer-events: none;
 `
 
-export default class AppHeader extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            apName: this.props.apName
-        }
-    }
-    render() {
-        return (
-            <Header>
-                <Img src = {logo} alt='React logo' className = 'App-logo'/>
-                <H1>{this.state.apName}</H1>
-            </Header>
-        )
-    }
+export default function AppHeader (props) {
+
+    return (
+        <Header>
+            <Img src = {logo} alt='React logo' className = 'App-logo'/>
+            <H1>{props.apName}</H1>
+        </Header>
+    )
 }
 
 AppHeader.propTypes = {
