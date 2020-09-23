@@ -1,23 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <Jumbotron fluid = 'true'>
+          <h1>Fluid jumbotron</h1>
+          <p>
+            This is a modified jumbotron that occupies the entire horizontal space of its parent.
+          </p>
+      </Jumbotron>
       </header>
     </div>
   );
