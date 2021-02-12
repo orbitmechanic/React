@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import AppHeader from './components/AppHeader';
 import CoinList from './components/CoinList';
 import AccountBalance from './components/AccountBalance';
 import styled from 'styled-components';
@@ -24,6 +23,7 @@ function App (props) {
   const [showBalance, setShowBalance] = useState(true);
   const [coinData, setCoinData] = useState([]);
   const apName = 'Coin Exchange';
+  console.log(apName);
 
   const getIDs = async () => {
     // Fetch the IDs of first COIN_COUNT items.
@@ -117,8 +117,6 @@ function App (props) {
 
   return (
     <AppStyle>
-      <AppHeader 
-        apName={apName}/>
       <AccountBalance 
         amount={balance} 
         showBalance={showBalance}
